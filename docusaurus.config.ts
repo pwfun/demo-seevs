@@ -31,7 +31,7 @@ const config: Config = {
         docs: {
           routeBasePath: '/', // Docs-only mode
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/yourusername/docs-demo/tree/main/',
+          editUrl: 'https://github.com/pwfun/demo-seevs/tree/main/',
         },
         blog: false,
         theme: {
@@ -50,7 +50,7 @@ const config: Config = {
       title: 'DevDocs Demo',
       items: [
         {
-          href: 'https://github.com/yourusername/docs-demo',
+          href: 'https://github.com/pwfun/demo-seevs',
           label: 'GitHub',
           position: 'right',
         },
@@ -64,11 +64,11 @@ const config: Config = {
           items: [
             {
               label: 'Getting Started',
-              to: '/intro',
+              to: 'intro',
             },
             {
               label: 'API Reference',
-              to: '/api-reference',
+              to: 'api-reference',
             },
           ],
         },
@@ -77,7 +77,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/yourusername/docs-demo',
+              href: 'https://github.com/pwfun/demo-seevs',
             },
           ],
         },

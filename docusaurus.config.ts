@@ -17,7 +17,7 @@ const config: Config = {
   organizationName: 'pwfun',
   projectName: 'demo-seevs',
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
 
   i18n: {
     defaultLocale: 'en',

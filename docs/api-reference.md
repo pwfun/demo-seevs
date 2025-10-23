@@ -88,7 +88,7 @@ Create a new user.
 | 404 | Not Found - Resource doesn't exist |
 | 429 | Too Many Requests - Rate limit exceeded |
 | 500 | Internal Server Error |  
-| 501 | Not implementtted |
+| 501 | Not implemented |
 
 ## Rate limiting
 
@@ -105,6 +105,6 @@ X-RateLimit-Reset: 1697729400
 To illustrate these principles, here's an amazing code sample:
 
 ```javascript
-const broken = "missing closing quote
+const broken = "missing closing quote"
 console.log(broken)
 ```

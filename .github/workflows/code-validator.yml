@@ -20,52 +20,77 @@ jobs:
         with:
           node-version: 20
       
-      - name: Extract and validate JavaScript code blocks
+      - name: Validate code blocks
         run: |
-          # Simple script to extract and validate JS code blocks
-          echo "Checking JavaScript code blocks in markdown files..."
+          python3 << 'PYTHON_SCRIPT'
+          import re
+          import subprocess
+          import sys
+          from pathlib import Path
           
-          has_errors=0
+          has_errors = False
           
-          for file in docs/**/*.md; do
-            echo "Checking $file..."
-            
-            # Extract JavaScript code blocks and save to temp files
-            awk '/```javascript/,/```/' "$file" | grep -v '```' > /tmp/temp_code.js 2>/dev/null || true
-            
-            if [ -s /tmp/temp_code.js ]; then
-              echo "  Found JavaScript code block, validating..."
-              if node --check /tmp/temp_code.js 2>/dev/null; then
-                echo "  ✅ Valid JavaScript syntax"
-              else
-                echo "  ❌ Invalid JavaScript syntax in $file"
-                node --check /tmp/temp_code.js 2>&1 || true
-                has_errors=1
-              fi
-              rm /tmp/temp_code.js
-            fi
-            
-            # Also check for json blocks
-            awk '/```json/,/```/' "$file" | grep -v '```' > /tmp/temp_code.json 2>/dev/null || true
-            
-            if [ -s /tmp/temp_code.json ]; then
-              echo "  Found JSON code block, validating..."
-              if node -e "JSON.parse(require('fs').readFileSync('/tmp/temp_code.json', 'utf8'))" 2>/dev/null; then
-                echo "  ✅ Valid JSON syntax"
-              else
-                echo "  ❌ Invalid JSON syntax in $file"
-                node -e "JSON.parse(require('fs').readFileSync('/tmp/temp_code.json', 'utf8'))" 2>&1 || true
-                has_errors=1
-              fi
-              rm /tmp/temp_code.json
-            fi
-          done
+          # Find all markdown files
+          md_files = list(Path('docs').rglob('*.md'))
           
-          if [ $has_errors -eq 1 ]; then
-            echo ""
-            echo "❌ Code validation failed. Please fix the syntax errors above."
-            exit 1
-          else
-            echo ""
-            echo "✅ All code blocks are valid!"
-          fi
+          print(f"Checking {len(md_files)} markdown file(s)...")
+          print()
+          
+          for md_file in md_files:
+              content = md_file.read_text()
+              
+              # Extract JavaScript code blocks
+              js_pattern = r'```javascript\n(.*?)```'
+              js_blocks = re.findall(js_pattern, content, re.DOTALL)
+              
+              if js_blocks:
+                  print(f"📄 {md_file}")
+                  for i, code in enumerate(js_blocks, 1):
+                      # Save to temp file
+                      temp_file = f'/tmp/code_block_{i}.js'
+                      with open(temp_file, 'w') as f:
+                          f.write(code)
+                      
+                      # Validate with Node
+                      result = subprocess.run(
+                          ['node', '--check', temp_file],
+                          capture_output=True,
+                          text=True
+                      )
+                      
+                      if result.returncode == 0:
+                          print(f"  ✅ JavaScript block #{i}: Valid")
+                      else:
+                          print(f"  ❌ JavaScript block #{i}: INVALID")
+                          print(f"     Error: {result.stderr.strip()}")
+                          has_errors = True
+              
+              # Extract JSON code blocks
+              json_pattern = r'```json\n(.*?)```'
+              json_blocks = re.findall(json_pattern, content, re.DOTALL)
+              
+              if json_blocks and not js_blocks:
+                  print(f"📄 {md_file}")
+              
+              for i, code in enumerate(json_blocks, 1):
+                  # Validate JSON
+                  result = subprocess.run(
+                      ['node', '-e', f'JSON.parse({repr(code)})'],
+                      capture_output=True,
+                      text=True
+                  )
+                  
+                  if result.returncode == 0:
+                      print(f"  ✅ JSON block #{i}: Valid")
+                  else:
+                      print(f"  ❌ JSON block #{i}: INVALID")
+                      print(f"     Error: {result.stderr.strip()}")
+                      has_errors = True
+          
+          print()
+          if has_errors:
+              print("❌ Code validation FAILED - fix syntax errors above")
+              sys.exit(1)
+          else:
+              print("✅ All code blocks are valid!")
+          PYTHON_SCRIPT

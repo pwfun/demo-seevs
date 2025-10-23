@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # API Reference
 
-This is an example of what API documentation might look like in a docs-as-code system.
+This is an example of what API documentation might look like in a potential docs-as-code system.
 
 ## Authentication
 

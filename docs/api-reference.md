@@ -87,7 +87,8 @@ Create a new user.
 | 401 | Unauthorized - Invalid API key |
 | 404 | Not Found - Resource doesn't exist |
 | 429 | Too Many Requests - Rate limit exceeded |
-| 500 | Internal Server Error |
+| 500 | Internal Server Error |  
+| 501 | Not implementtted |
 
 ## Rate limiting
 

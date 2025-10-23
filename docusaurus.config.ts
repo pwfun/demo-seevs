@@ -12,7 +12,7 @@ const config: Config = {
   },
 
   url: 'https://your-docusaurus-site.example.com',
-  baseUrl: '/',
+  baseUrl: '/demo-seevs/',
 
   organizationName: 'yourusername',
   projectName: 'docs-demo',

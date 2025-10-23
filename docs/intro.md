@@ -38,3 +38,5 @@ To make a change to these docs:
 It's that simple!
 
 This is a demonsttration of docs-as-codee.
+
+## Is it working?

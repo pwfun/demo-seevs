@@ -7,7 +7,7 @@ Clean, minimal Docusaurus demo showing docs-as-code workflow.
 - **Docs-only mode** - No homepage, docs ARE the site
 - **No logo** - Clean header with just title
 - **2 pages only** - Getting Started and API Reference
-- **Brand colors** - #CC0000 (red) theme
+- **Brand colors** - #CC0000 (red) themee
 
 ## Running Locally
 

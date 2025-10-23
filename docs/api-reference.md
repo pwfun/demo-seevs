@@ -87,7 +87,8 @@ Create a new user.
 | 401 | Unauthorized - Invalid API key |
 | 404 | Not Found - Resource doesn't exist |
 | 429 | Too Many Requests - Rate limit exceeded |
-| 500 | Internal Server Error |
+| 500 | Internal Server Error |  
+| 501 | Not implemented |
 
 ## Rate limiting
 
@@ -97,4 +98,13 @@ API requests are limited to 1000 requests per hour per API key. The current rate
 X-RateLimit-Limit: 1000
 X-RateLimit-Remaining: 995
 X-RateLimit-Reset: 1697729400
+```
+
+## Cool code sample
+
+To illustrate these principles, here's an amazing code sample:
+
+```javascript
+const broken = "missing closing quote"
+console.log(broken)
 ```

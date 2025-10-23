@@ -12,7 +12,7 @@ const config: Config = {
   },
 
   url: 'https://pwfun.github.io',
-  baseUrl: '/demo-seevs/',
+  baseUrl: '/',
 
   organizationName: 'pwfun',
   projectName: 'demo-seevs',

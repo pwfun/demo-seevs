@@ -99,3 +99,12 @@ X-RateLimit-Limit: 1000
 X-RateLimit-Remaining: 995
 X-RateLimit-Reset: 1697729400
 ```
+
+## Cool code sample
+
+To illustrate these principles, here's an amazing code sample:
+
+```javascript
+const broken = "missing closing quote
+console.log(broken)
+```

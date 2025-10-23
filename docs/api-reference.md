@@ -102,6 +102,6 @@ X-RateLimit-Reset: 1697729400
 ## Example with an error
 
 ```javascript
-const broken = "missing closing quote
+const broken = "missingg closing quote
 console.log(broken)
 ```

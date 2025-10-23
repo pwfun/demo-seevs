@@ -36,3 +36,5 @@ To make a change to these docs:
 5. Once approved and merged, changes deploy automatically
 
 It's that simple!
+
+This is a demonsttration of docs-as-codee.

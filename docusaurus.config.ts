@@ -11,11 +11,11 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://pwfun.github.io',
   baseUrl: '/demo-seevs/',
 
-  organizationName: 'yourusername',
-  projectName: 'docs-demo',
+  organizationName: 'pwfun',
+  projectName: 'demo-seevs',
 
   onBrokenLinks: 'throw',
 
@@ -29,7 +29,7 @@ const config: Config = {
       'classic',
       {
         docs: {
-          routeBasePath: '/', // Docs-only mode
+          routeBasePath: '/',
           sidebarPath: './sidebars.ts',
           editUrl: 'https://github.com/pwfun/demo-seevs/tree/main/',
         },

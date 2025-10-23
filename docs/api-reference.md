@@ -98,3 +98,10 @@ X-RateLimit-Limit: 1000
 X-RateLimit-Remaining: 995
 X-RateLimit-Reset: 1697729400
 ```
+
+## Example with an error
+
+```javascript
+const broken = "missingg closing quote
+console.log(broken)
+```

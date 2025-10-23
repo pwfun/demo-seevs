@@ -1,0 +1,71 @@
+name: Validate Code Blocks
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**/*.md'
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**/*.md'
+
+jobs:
+  validate-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: Extract and validate JavaScript code blocks
+        run: |
+          # Simple script to extract and validate JS code blocks
+          echo "Checking JavaScript code blocks in markdown files..."
+          
+          has_errors=0
+          
+          for file in docs/**/*.md; do
+            echo "Checking $file..."
+            
+            # Extract JavaScript code blocks and save to temp files
+            awk '/```javascript/,/```/' "$file" | grep -v '```' > /tmp/temp_code.js 2>/dev/null || true
+            
+            if [ -s /tmp/temp_code.js ]; then
+              echo "  Found JavaScript code block, validating..."
+              if node --check /tmp/temp_code.js 2>/dev/null; then
+                echo "  ✅ Valid JavaScript syntax"
+              else
+                echo "  ❌ Invalid JavaScript syntax in $file"
+                node --check /tmp/temp_code.js 2>&1 || true
+                has_errors=1
+              fi
+              rm /tmp/temp_code.js
+            fi
+            
+            # Also check for json blocks
+            awk '/```json/,/```/' "$file" | grep -v '```' > /tmp/temp_code.json 2>/dev/null || true
+            
+            if [ -s /tmp/temp_code.json ]; then
+              echo "  Found JSON code block, validating..."
+              if node -e "JSON.parse(require('fs').readFileSync('/tmp/temp_code.json', 'utf8'))" 2>/dev/null; then
+                echo "  ✅ Valid JSON syntax"
+              else
+                echo "  ❌ Invalid JSON syntax in $file"
+                node -e "JSON.parse(require('fs').readFileSync('/tmp/temp_code.json', 'utf8'))" 2>&1 || true
+                has_errors=1
+              fi
+              rm /tmp/temp_code.json
+            fi
+          done
+          
+          if [ $has_errors -eq 1 ]; then
+            echo ""
+            echo "❌ Code validation failed. Please fix the syntax errors above."
+            exit 1
+          else
+            echo ""
+            echo "✅ All code blocks are valid!"
+          fi

@@ -1,0 +1,26 @@
+/**
+ * Custom CSS with brand colors
+ */
+
+:root {
+  --ifm-color-primary: #CC0000;
+  --ifm-color-primary-dark: #b80000;
+  --ifm-color-primary-darker: #ad0000;
+  --ifm-color-primary-darkest: #8f0000;
+  --ifm-color-primary-light: #d61a1a;
+  --ifm-color-primary-lighter: #db2525;
+  --ifm-color-primary-lightest: #e54040;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #ff3333;
+  --ifm-color-primary-dark: #ff1a1a;
+  --ifm-color-primary-darker: #ff0d0d;
+  --ifm-color-primary-darkest: #e60000;
+  --ifm-color-primary-light: #ff4d4d;
+  --ifm-color-primary-lighter: #ff5a5a;
+  --ifm-color-primary-lightest: #ff8080;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}

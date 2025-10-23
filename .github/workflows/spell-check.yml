@@ -1,0 +1,70 @@
+name: Spell Check
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**/*.md'
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**/*.md'
+
+jobs:
+  spellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: Install cspell
+        run: npm install -g cspell
+      
+      - name: Create cspell config
+        run: |
+          cat > cspell.json << 'CSPELL_CONFIG'
+          {
+            "version": "0.2",
+            "language": "en",
+            "words": [
+              "Docusaurus",
+              "docusaurus",
+              "pwfun",
+              "seevs",
+              "DevOps",
+              "navbar",
+              "API",
+              "JSON",
+              "npm",
+              "baseUrl",
+              "editUrl",
+              "GitHub",
+              "localhost",
+              "mkdir",
+              "repo"
+            ],
+            "ignorePaths": [
+              "node_modules/**",
+              "build/**",
+              "package-lock.json",
+              ".git/**"
+            ]
+          }
+          CSPELL_CONFIG
+      
+      - name: Run spell check
+        run: |
+          echo "Running spell check on markdown files..."
+          echo ""
+          
+          if cspell "docs/**/*.md" --no-progress --show-context; then
+            echo ""
+            echo "✅ No spelling errors found!"
+          else
+            echo ""
+            echo "❌ Spelling errors found. Please fix the typos above."
+            exit 1
+          fi
